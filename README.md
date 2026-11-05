@@ -4,7 +4,7 @@
 
 <div align="center">
 
-# DopplerGPS: Acoustic Aircraft Doppler Geolocation Pipeline
+# DopplerGPS: Acoustic Geolocation of Ground Observers via Aircraft Doppler Inversion and ADS-B Flight Trajectories
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
@@ -39,13 +39,6 @@ Because piston and turboprop engines emit stable blade-pass frequencies, their f
 
 > **Research Attribution & Prior Art:**  
 > This implementation was inspired by the empirical demonstration produced by OSINT researcher [colsto](https://www.youtube.com/watch?v=UytYrhYLOKI) (*"I discovered a sound that leaks your exact location (and it's everywhere)"*). While colsto demonstrated the feasibility of the acoustic Doppler phenomenon without releasing source code or mathematical tooling, **Dyne Research** has engineered this reference open-source architecture—providing fully vectorized coordinate transformations, lazy DuckDB ADS-B query pipelines, dual-event temporal locking, and sub-meter DEM altitude modeling.
-
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=UytYrhYLOKI" target="_blank">
-    <img src="https://img.youtube.com/vi/UytYrhYLOKI/maxresdefault.jpg" alt="Finding a secret location using only plane sounds by colsto" width="850">
-  </a>
-  <p><em>Watch: <a href="https://www.youtube.com/watch?v=UytYrhYLOKI" target="_blank">"Finding a secret location using only plane sounds"</a> by colsto</em></p>
-</div>
 
 ---
 
@@ -376,7 +369,7 @@ If you use DopplerGPS in academic research, investigative journalism, or geospat
 ```bibtex
 @software{dopplergps2026,
   author = {{Dyne Research}},
-  title = {DopplerGPS: Acoustic Aircraft Doppler Geolocation Pipeline},
+  title = {DopplerGPS: Acoustic Geolocation of Ground Observers via Aircraft Doppler Inversion and ADS-B Flight Trajectories},
   url = {https://github.com/dyneresearch/DopplerGPS},
   version = {0.1.0},
   year = {2026}
