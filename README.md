@@ -9,8 +9,11 @@
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Organization](https://img.shields.io/badge/Laboratory-Dyne%20Research-000000?style=flat-square&logo=target)](https://dyneresearch.com)
-[![CI Tests](https://github.com/dyneresearch/DopplerGPS/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dyneresearch/DopplerGPS/actions/workflows/ci.yml)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dyneresearch/DopplerGPS/blob/main/notebooks/interactive_walkthrough.ipynb)
+[![CI Tests](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=githubactions&logoColor=white)](https://github.com/dyneresearch/DopplerGPS/actions)
+[![Open In Colab](https://img.shields.io/badge/Colab-Open%20Notebook-F9AB00?style=flat-square&logo=googlecolab&logoColor=white)](https://colab.research.google.com/github/dyneresearch/DopplerGPS/blob/main/notebooks/interactive_walkthrough.ipynb)
+[![Tests: 27 Passing](https://img.shields.io/badge/Tests-27%20Passing-success?style=flat-square&logo=pytest&logoColor=white)](#-technical-verification--test-suite)
+[![Domain: Acoustic OSINT](https://img.shields.io/badge/Domain-Acoustic%20OSINT%20%26%20SIGINT-red?style=flat-square)](#-how-it-works-the-physics)
+[![Policy: Responsible Use](https://img.shields.io/badge/Policy-Responsible%20Use-blueviolet?style=flat-square)](DISCLAIMER.md)
 
 **Pinpoint the exact physical location of an audio recording down to tens of meters using overhead propeller plane acoustic signatures, historical ADS-B flight trajectories, and Digital Elevation Models (DEM).**
 
