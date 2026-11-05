@@ -1,0 +1,28 @@
+{
+  "$comment": "DopplerGPS Manual Measurement Configuration Template (Dyne Research)",
+  "events": [
+    {
+      "event_id": 1,
+      "cpa_time_in_audio": 52.4,
+      "f0_baseline_hz": 131.5,
+      "harmonic_index": 1,
+      "est_velocity_range_m_s": [85.0, 125.0],
+      "est_slant_distance_range_m": [1500.0, 4500.0],
+      "traced_points": [
+        {"time_in_audio": 42.0, "frequency_hz": 134.2},
+        {"time_in_audio": 52.4, "frequency_hz": 131.5},
+        {"time_in_audio": 62.0, "frequency_hz": 128.8}
+      ]
+    },
+    {
+      "event_id": 2,
+      "cpa_time_in_audio": 948.1,
+      "f0_baseline_hz": 115.0,
+      "harmonic_index": 1,
+      "est_velocity_range_m_s": [80.0, 120.0],
+      "est_slant_distance_range_m": [1200.0, 3800.0],
+      "traced_points": []
+    }
+  ]
+}
+

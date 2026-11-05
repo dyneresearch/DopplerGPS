@@ -9,8 +9,8 @@
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![Organization](https://img.shields.io/badge/Laboratory-Dyne%20Research-000000?style=flat-square&logo=target)](https://dyneresearch.com)
-[![OSINT](https://img.shields.io/badge/Domain-OSINT%20%26%20Acoustic%20SIGINT-red?style=flat-square)](#)
-[![Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=flat-square)](#)
+[![CI Tests](https://github.com/dyneresearch/DopplerGPS/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/dyneresearch/DopplerGPS/actions/workflows/ci.yml)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/dyneresearch/DopplerGPS/blob/main/notebooks/interactive_walkthrough.ipynb)
 
 **Pinpoint the exact physical location of an audio recording down to tens of meters using overhead propeller plane acoustic signatures, historical ADS-B flight trajectories, and Digital Elevation Models (DEM).**
 
@@ -213,43 +213,69 @@ dopplergps demo --output-dir demo_output
 ============================================================
 ```
 
-### 2. Processing Real-World Audio & ADS-B Data
-To execute a search on your own audio recording and historical ADS-B logs:
+### 2. Inspecting Real Audio Recordings (`inspect-audio`)
+Before running geolocation on field audio, inspect the acoustic spectrum to measure Closest Point of Approach timestamps ($t_{\text{CPA}}$) and fundamental blade frequencies ($F_0$):
+
+```bash
+dopplergps inspect-audio \
+  --audio "field_recording.wav" \
+  --output-plot "diagnostic_spectrum.png" \
+  --fmin 60.0 \
+  --fmax 350.0
+```
+
+The tool performs high-resolution STFT analysis, calculates RMS power levels, detects prominent spectral peaks, and outputs a diagnostic PNG displaying both the time-frequency spectrogram and the time-averaged harmonic power curve.
+
+---
+
+### 3. Fetching & Converting Real ADS-B Telemetry (`fetch-adsb`)
+DopplerGPS provides built-in utilities to acquire real-world flight state vectors:
+
+**Fetch live states from OpenSky Network:**
+```bash
+dopplergps fetch-adsb \
+  --source opensky-live \
+  --bbox 39.80 40.20 -75.30 -74.70 \
+  --output "flights.parquet"
+```
+
+**Fetch full historical flight trajectory (by ICAO24 hex address):**
+```bash
+dopplergps fetch-adsb \
+  --source opensky-track \
+  --icao24 "a12345" \
+  --time 1700000000 \
+  --output "flight_track.parquet"
+```
+
+**Convert raw readsb / ADS-B Exchange (tar1090) JSON history:**
+```bash
+dopplergps fetch-adsb \
+  --source adsbx-json \
+  --input-json "/path/to/history/*.json" \
+  --bbox 39.80 40.20 -75.30 -74.70 \
+  --output "flights.parquet"
+```
+
+---
+
+### 4. Running Doppler Geolocation on Real Data (`run`)
+To execute the physical solver against your flight records and audio:
 
 ```bash
 dopplergps run \
-  --adsb "/path/to/adsb_historical/*.parquet" \
+  --adsb "flights.parquet" \
   --audio "field_recording.wav" \
-  --config "measurements.json" \
+  --config "examples/measurement_template.json" \
   --bbox 39.80 40.20 -75.30 -74.70 \
   --dem "regional_elevation.tif" \
   --temperature 18.5 \
-  --output-dir "output_run" \
+  --output-dir "case_output" \
   --coarse-res 200.0 \
   --micro-res 20.0
 ```
 
-#### Manual Measurement Configuration Schema (`measurements.json`)
-```json
-{
-  "events": [
-    {
-      "event_id": 1,
-      "cpa_time_in_audio": 52.4,
-      "f0_baseline_hz": 131.5,
-      "est_velocity_range_m_s": [85, 120],
-      "est_slant_distance_range_m": [1500, 4500]
-    },
-    {
-      "event_id": 2,
-      "cpa_time_in_audio": 948.1,
-      "f0_baseline_hz": 115.0,
-      "est_velocity_range_m_s": [80, 115],
-      "est_slant_distance_range_m": [1200, 3800]
-    }
-  ]
-}
-```
+> **Template Configuration:** See [`examples/measurement_template.json`](examples/measurement_template.json) and the [Operational Field Guide](examples/README.md) for detailed parameter tuning. For an interactive Google Colab / Jupyter demonstration, explore [`notebooks/interactive_walkthrough.ipynb`](notebooks/interactive_walkthrough.ipynb).
 
 ---
 
@@ -268,18 +294,22 @@ pytest tests/ -v
 ```
 
 ```text
-tests/test_phase1.py::test_adsb_loader_filter PASSED                     [  4%]
-tests/test_phase1.py::test_dem_elevation_lookup PASSED                   [  9%]
-tests/test_phase2.py::test_spectrogram_dimensions PASSED                 [ 18%]
-tests/test_phase3.py::test_delayed_cpa_calculation PASSED                [ 31%]
-tests/test_phase3.py::test_10km_silence_filter PASSED                    [ 40%]
-tests/test_phase4.py::test_cubic_spline_velocity_derivative PASSED       [ 54%]
-tests/test_phase4.py::test_doppler_curve_physics PASSED                   [ 63%]
-tests/test_phase5.py::test_locked_temporal_offset_penalizes_drift PASSED [ 77%]
-tests/test_phase6.py::test_micro_grid_resolution PASSED                  [ 86%]
-tests/test_end_to_end.py::test_end_to_end_geolocation PASSED            [100%]
+tests/test_cli_and_tools.py::test_convert_adsbx_json_to_parquet PASSED   [  3%]
+tests/test_cli_and_tools.py::test_fetch_opensky_live_states_mock PASSED  [  7%]
+tests/test_cli_and_tools.py::test_fetch_opensky_track_mock PASSED        [ 11%]
+tests/test_cli_and_tools.py::test_inspect_audio_peak_detection PASSED    [ 14%]
+tests/test_cli_and_tools.py::test_cli_parser_subcommands PASSED          [ 18%]
+tests/test_end_to_end.py::test_full_pipeline_end_to_end PASSED           [ 22%]
+tests/test_phase1.py::test_adsb_loader_filters_jets PASSED               [ 25%]
+tests/test_phase2.py::test_spectrogram_generation_and_peak_frequency PASSED [ 44%]
+tests/test_phase3.py::test_delayed_cpa_calculator_math PASSED            [ 62%]
+tests/test_phase4.py::test_doppler_modeler_curve_physics PASSED          [ 74%]
+tests/test_phase5.py::test_locked_offset_scorer PASSED                   [ 81%]
+tests/test_phase6.py::test_micro_grid_generation PASSED                  [ 88%]
+tests/test_phase6.py::test_folium_map_generation PASSED                  [ 96%]
+tests/test_phase6.py::test_plot_spectrogram_with_curves PASSED           [100%]
 
-============================= 22 passed in 37.15s ==============================
+============================= 27 passed in 37.79s ==============================
 ```
 
 ---

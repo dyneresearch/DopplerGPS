@@ -9,6 +9,10 @@ from doppler_geo.phase2_audio.measurement_interface import (
     AudioEventMeasurement,
     MeasurementConfig,
 )
+from doppler_geo.phase2_audio.inspector import (
+    AudioDiagnostics,
+    inspect_audio,
+)
 
 __all__ = [
     "SpectrogramData",
@@ -16,5 +20,7 @@ __all__ = [
     "TracedPoint",
     "AudioEventMeasurement",
     "MeasurementConfig",
+    "AudioDiagnostics",
+    "inspect_audio",
 ]
 
