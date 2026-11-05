@@ -1,4 +1,6 @@
-![DopplerGPS Banner](banner image.png)
+<p align="center">
+  <img src="banner%20image.png" alt="DopplerGPS Banner" width="100%">
+</p>
 
 <div align="center">
 
@@ -31,6 +33,13 @@ Because piston and turboprop engines emit stable blade-pass frequencies, their f
 
 > **Research Attribution & Prior Art:**  
 > This implementation was inspired by the empirical demonstration produced by OSINT researcher [colsto](https://www.youtube.com/watch?v=UytYrhYLOKI) (*"I discovered a sound that leaks your exact location (and it's everywhere)"*). While colsto demonstrated the feasibility of the acoustic Doppler phenomenon without releasing source code or mathematical tooling, **Dyne Research** has engineered this reference open-source architecture—providing fully vectorized coordinate transformations, lazy DuckDB ADS-B query pipelines, dual-event temporal locking, and sub-meter DEM altitude modeling.
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=UytYrhYLOKI" target="_blank">
+    <img src="https://img.youtube.com/vi/UytYrhYLOKI/maxresdefault.jpg" alt="Finding a secret location using only plane sounds by colsto" width="850">
+  </a>
+  <p><em>Watch: <a href="https://www.youtube.com/watch?v=UytYrhYLOKI" target="_blank">"Finding a secret location using only plane sounds"</a> by colsto</em></p>
+</div>
 
 ---
 
@@ -322,7 +331,7 @@ Every search produces an interactive web visualization (`map.html`) built with F
 We build open-source reference implementations of state-of-the-art computational methodologies to empower researchers, investigative journalists, and geospatial analysts worldwide.
 
 * **Website:** [dyneresearch.com](https://dyneresearch.com)
-* **Inquiries:** [research@dyneresearch.com](mailto:research@dyneresearch.com)
+* **Inquiries:** [connect@dyneresearch.com](mailto:connect@dyneresearch.com)
 * **GitHub:** [github.com/dyneresearch](https://github.com/dyneresearch)
 
 ---
