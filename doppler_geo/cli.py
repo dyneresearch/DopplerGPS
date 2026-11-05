@@ -109,7 +109,17 @@ def run_demo(output_dir: str) -> None:
         print(f"  3. Spectrogram Overlay:  {result.plot_path}")
 
 
+LEGAL_NOTICE = """
+[LEGAL NOTICE] DopplerGPS is published strictly for academic research, atmospheric acoustics
+study, and authorized defensive OSINT verification. Malicious surveillance, unlawful tracking,
+and privacy violations are strictly prohibited. Dyne Research assumes no liability for misuse.
+See DISCLAIMER.md for full terms.
+"""
+
+
 def main() -> None:
+    print(LEGAL_NOTICE.strip())
+    print("-" * 70)
     parser = build_parser()
     args = parser.parse_args()
 
